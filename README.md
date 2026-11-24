@@ -131,16 +131,40 @@ servidor da JFRS quando o cálculo é gravado, e o resultado sai como PDF em
 Recalcular localmente exigiria reimplementar o Manual de Cálculos com todas as séries de índices, e o
 resultado poderia divergir do oficial; por isso o MCP usa o motor da própria JFRS.
 
-## Privacidade e uso responsável
+## Política de privacidade
 
-- Os dados do cálculo (nomes, CPF/CNPJ, valores) são enviados ao Projef Web, como acontece quando se usa o
-  site. Cada cálculo fica gravado nos servidores da JFRS e pode ser recuperado pelo identificador durante
-  3 anos.
-- O link do PDF é público: quem tiver o identificador abre o demonstrativo.
-- `gerar_sicar=true` gera o demonstrativo SICAR-JF4R e consulta o número do processo no eproc da 4ª
-  Região, que preenche autor e réu com os dados reais do processo. Fica desligado por padrão.
-- O MCP limita os cálculos simultâneos e não faz consultas em massa. Use com moderação: é um serviço
-  público mantido pela JFRS.
+- **Dados coletados:** só os que você informa para o cálculo (nomes, CPF/CNPJ, número do processo,
+  datas e valores das parcelas, honorários, dados do confeccionador). O MCP não lê histórico de
+  conversa, memória nem arquivos do usuário.
+- **Uso:** os dados servem apenas para preencher o formulário do Projef Web e montar a resposta.
+- **Compartilhamento com terceiros:** os dados são enviados ao Projef Web, da Justiça Federal do Rio
+  Grande do Sul, exatamente como quando se usa o site. Com `gerar_sicar=true`, o número do processo
+  também é consultado no eproc da 4ª Região, que preenche autor e réu com os dados reais do processo
+  (desligado por padrão). Nada é enviado a outros serviços.
+- **Armazenamento e retenção:** o MCP não guarda dados: nada fica em disco nem em banco de dados, e o
+  navegador invisível é descartado a cada cálculo. A JFRS grava cada cálculo e permite recuperá-lo pelo
+  identificador durante 3 anos; o link do PDF é público para quem tiver o identificador. Quem hospeda uma
+  instância remota pode ter registros de acesso do próprio servidor web (endereço, horário, caminho),
+  sem o conteúdo dos cálculos.
+- **Contato:** abra uma [issue](https://github.com/lazarofhn/projef-mcp/issues) neste repositório.
+
+## Uso responsável
+
+O MCP limita os cálculos simultâneos e não faz consultas em massa. Use com moderação: é um serviço
+público mantido pela JFRS.
+
+## Conformidade com os conectores do Claude
+
+- Cada ferramenta declara `title`, `readOnlyHint`, `destructiveHint`, `idempotentHint` e
+  `openWorldHint`. Leitura (`projef_opcoes`, `projef_recuperar`) e escrita (`projef_calcular`, que cria
+  um registro novo na JFRS) ficam em ferramentas separadas.
+- Os erros voltam como erro de ferramenta (`isError`), com a causa e o que fazer.
+- Os resultados ficam abaixo de ~140 mil caracteres (limite do claude.ai: ~150 mil). Demonstrativos muito
+  longos são resumidos, com aviso e o link do PDF completo. O cálculo é interrompido aos 200 segundos (o
+  claude.ai encerra a chamada aos 240).
+- No modo remoto, o acesso é por URL com caminho secreto (para o Claude, um conector sem autenticação).
+  Serve bem como conector personalizado. Não se presta ao diretório oficial de conectores da Anthropic,
+  que exige que o servidor seja do dono do serviço que ele acessa; aqui o serviço é da JFRS.
 
 ## Limitações
 

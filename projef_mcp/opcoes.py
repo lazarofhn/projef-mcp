@@ -71,7 +71,7 @@ UFS = ["AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO", "MA", "MG", "MS", "
        "PR", "RJ", "RN", "RO", "RR", "RS", "SC", "SE", "SP", "TO"]
 
 ORIENTACAO = """\
-Uso típico (o MCP não decide critério jurídico; confirme com o título judicial):
+Uso típico (a escolha do critério depende do que o título judicial determina):
 - Repetição de indébito tributário: criterio_correcao=3 (Manual de Cálculos da JF, SELIC a partir
   de cada recolhimento) e juros_codigo="0" (a SELIC já engloba juros). Cada recolhimento indevido é
   uma parcela (mês/ano do pagamento e valor recolhido).
