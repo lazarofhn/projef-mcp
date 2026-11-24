@@ -1,0 +1,43 @@
+[build-system]
+requires = ["hatchling>=1.24"]
+build-backend = "hatchling.build"
+
+[project]
+name = "projef-mcp"
+version = "0.1.0"
+description = "Servidor MCP para o Projef Web (calculadora judicial da JFRS): cálculos de repetição de indébito e débitos judiciais pelo Manual de Cálculos da Justiça Federal, direto no Claude."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.10"
+authors = [{ name = "lazarofhn" }]
+keywords = ["mcp", "claude", "projef", "jfrs", "calculo-judicial", "repeticao-de-indebito", "justica-federal"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Natural Language :: Portuguese (Brazilian)",
+  "Topic :: Office/Business",
+]
+dependencies = [
+  "mcp>=1.26,<2",
+  "playwright>=1.48",
+  "httpx>=0.27",
+  "pypdf>=5.0",
+  "pydantic>=2.7",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "pytest-asyncio>=0.23"]
+
+[project.scripts]
+projef-mcp = "projef_mcp.server:main"
+
+[project.urls]
+Repository = "https://github.com/lazarofhn/projef-mcp"
+Issues = "https://github.com/lazarofhn/projef-mcp/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["projef_mcp"]
+
+[tool.pytest.ini_options]
+markers = ["online: acessa o Projef Web de verdade (rode com PROJEF_ONLINE=1)"]
+asyncio_mode = "auto"

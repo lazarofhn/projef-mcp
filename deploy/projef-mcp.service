@@ -1,0 +1,15 @@
+[Unit]
+Description=projef-mcp (servidor MCP do Projef Web, streamable HTTP)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=__USUARIO__
+WorkingDirectory=__PASTA__
+EnvironmentFile=__PASTA__/.env
+ExecStart=__PASTA__/.venv/bin/projef-mcp --http
+Restart=on-failure
+MemoryMax=1500M
+
+[Install]
+WantedBy=multi-user.target
